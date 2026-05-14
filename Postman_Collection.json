@@ -1,0 +1,241 @@
+{
+  "info": {
+    "name": "EduTrack API",
+    "description": "Complete API collection for EduTrack Student Performance Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"student\",\n  \"studentId\": \"STU001\",\n  \"department\": \"Computer Science\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/auth/register", "host": ["{{base_url}}"], "path": ["auth", "register"]}
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/auth/login", "host": ["{{base_url}}"], "path": ["auth", "login"]}
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/auth/me", "host": ["{{base_url}}"], "path": ["auth", "me"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/users", "host": ["{{base_url}}"], "path": ["users"]}
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/users/:id", "host": ["{{base_url}}"], "path": ["users", ":id"]}
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Updated\",\n  \"phone\": \"1234567890\",\n  \"department\": \"CS\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/users/profile", "host": ["{{base_url}}"], "path": ["users", "profile"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/courses", "host": ["{{base_url}}"], "path": ["courses"]}
+          }
+        },
+        {
+          "name": "Create Course (Teacher)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Introduction to Programming\",\n  \"description\": \"Learn basics of programming\",\n  \"code\": \"CS101\",\n  \"credits\": 3,\n  \"semester\": \"Fall 2024\",\n  \"department\": \"Computer Science\",\n  \"maxStudents\": 60\n}"
+            },
+            "url": {"raw": "{{base_url}}/courses", "host": ["{{base_url}}"], "path": ["courses"]}
+          }
+        },
+        {
+          "name": "Enroll in Course (Student)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/courses/:id/enroll", "host": ["{{base_url}}"], "path": ["courses", ":id", "enroll"]}
+          }
+        },
+        {
+          "name": "Unenroll from Course (Student)",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/courses/:id/unenroll", "host": ["{{base_url}}"], "path": ["courses", ":id", "unenroll"]}
+          }
+        },
+        {
+          "name": "Delete Course (Teacher)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/courses/:id", "host": ["{{base_url}}"], "path": ["courses", ":id"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assignments",
+      "item": [
+        {
+          "name": "Get All Assignments",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/assignments", "host": ["{{base_url}}"], "path": ["assignments"]}
+          }
+        },
+        {
+          "name": "Create Assignment (Teacher)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Assignment 1 - Variables\",\n  \"description\": \"Write a program using variables\",\n  \"course\": \"COURSE_ID_HERE\",\n  \"totalMarks\": 100,\n  \"dueDate\": \"2024-12-31T23:59:59.000Z\",\n  \"instructions\": \"Submit your code file\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/assignments", "host": ["{{base_url}}"], "path": ["assignments"]}
+          }
+        },
+        {
+          "name": "Get Single Assignment",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/assignments/:id", "host": ["{{base_url}}"], "path": ["assignments", ":id"]}
+          }
+        },
+        {
+          "name": "Delete Assignment (Teacher)",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/assignments/:id", "host": ["{{base_url}}"], "path": ["assignments", ":id"]}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Submissions",
+      "item": [
+        {
+          "name": "Get All Submissions",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/submissions", "host": ["{{base_url}}"], "path": ["submissions"]}
+          }
+        },
+        {
+          "name": "Submit Assignment (Student)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assignment\": \"ASSIGNMENT_ID_HERE\",\n  \"content\": \"Here is my solution to the assignment...\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/submissions", "host": ["{{base_url}}"], "path": ["submissions"]}
+          }
+        },
+        {
+          "name": "Grade Submission (Teacher)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Authorization", "value": "Bearer {{token}}"},
+              {"key": "Content-Type", "value": "application/json"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"marksObtained\": 85,\n  \"feedback\": \"Great work! Well done.\"\n}"
+            },
+            "url": {"raw": "{{base_url}}/submissions/:id/grade", "host": ["{{base_url}}"], "path": ["submissions", ":id", "grade"]}
+          }
+        },
+        {
+          "name": "Get Student Analytics",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer {{token}}"}],
+            "url": {"raw": "{{base_url}}/submissions/analytics/student", "host": ["{{base_url}}"], "path": ["submissions", "analytics", "student"]}
+          }
+        }
+      ]
+    }
+  ]
+}
