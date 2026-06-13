@@ -1,0 +1,15 @@
+# Netlify config for the EduTrack monorepo.
+# The React app lives in the frontend/ subfolder, so we set base = "frontend".
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback: let react-router handle client-side routes instead of 404ing.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
